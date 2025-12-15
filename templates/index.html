@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Approval Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h2>Loan Approval Predictor</h2>
+
+    <input type="number" id="income" placeholder="Monthly Income">
+    <input type="number" id="loan_amount" placeholder="Loan Amount">
+    <input type="number" id="credit_score" placeholder="Credit Score">
+    <input type="number" id="employment_years" placeholder="Employment Years">
+
+    <button onclick="predictLoan()">Check Loan Status</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function predictLoan() {
+
+    // STEP 1: Read input values
+    let income = document.getElementById("income").value;
+    let loanAmount = document.getElementById("loan_amount").value;
+    let creditScore = document.getElementById("credit_score").value;
+    let employmentYears = document.getElementById("employment_years").value;
+
+    // STEP 2: Input validation
+    if (!income || !loanAmount || !creditScore || !employmentYears) {
+        alert("Please fill all fields!");
+        return; // STOP here if validation fails
+    }
+
+    // STEP 3: Send data to backend
+    fetch("/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            income: income,
+            loan_amount: loanAmount,
+            credit_score: creditScore,
+            employment_years: employmentYears
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        let resultDiv = document.getElementById("result");
+
+        if (data.loan_status === "Approved") {
+            resultDiv.style.color = "green";
+            resultDiv.innerHTML =
+                `✅ <b>Loan Approved</b><br>
+                 Approval Probability: ${data.approval_probability}%`;
+        } else {
+            resultDiv.style.color = "red";
+            resultDiv.innerHTML =
+                `❌ <b>Loan Rejected</b><br>
+                 Approval Probability: ${data.approval_probability}%`;
+        }
+    });
+}
+</script>
+
+
+</body>
+</html>
