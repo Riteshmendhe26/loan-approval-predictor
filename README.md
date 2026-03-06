@@ -93,3 +93,21 @@ For Streamlit:
 ```bash
 streamlit run app.py
 ```
+---
+
+## 👨‍💻 Author
+
+**Ritesh Mendhe**
+
+Blockchain Developer | Full Stack Developer | Web3 Enthusiast  
+
+LinkedIn  
+https://www.linkedin.com/in/ritesh-mendhe-209225294  
+
+GitHub  
+https://github.com/riteshmendhe2602  
+
+---
+
+⭐ If you like this project, give it a **star on GitHub**.
+
